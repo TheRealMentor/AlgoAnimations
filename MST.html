@@ -9,7 +9,7 @@
             width: 99.8%;
             height: 500px;
             position: absolute;
-            top: 150px;
+            top: 170px;
             left: 0px;
             border: 0.1em black solid;
             background-color: #f5f6fa;
@@ -32,6 +32,7 @@
         <button type="button" id='removeGraph'>Remove Graph</button>
         <button type="button" id='clear'>Clear</button>
     </div>
+    <p><strong>Note:</strong> For more information, open README.md file or go to: <a href='https://github.com/TheRealMentor/AlgoAnimations' target="_blank">github.com/TheRealMentor/AlgoAnimations</a></p>
     <div id="cy"></div>
 
     <script>
@@ -71,18 +72,22 @@
                     { data: { id: 'c' } },
                     { data: { id: 'd' } },
                     { data: { id: 'e' } },
-                    { data: { id: 'f' } }
+                    { data: { id: 'f' } },
+                    { data: { id: 'g' } }
                 ],
 
             edges: [
-                    { data: { id: 'ab', weight: 14, source: 'a', target: 'b'}, classes: 'autorotate' },
+                    { data: { id: 'ab', weight: 9, source: 'a', target: 'b'}, classes: 'autorotate' },
                     { data: { id: 'af', weight: 7, source: 'a', target: 'f'}, classes: 'autorotate' },
-                    { data: { id: 'be', weight: 6, source: 'b', target: 'e'}, classes: 'autorotate' },
+                    { data: { id: 'ea', weight: 6, source: 'e', target: 'a'}, classes: 'autorotate' },
                     { data: { id: 'bc', weight: 5, source: 'b', target: 'c'}, classes: 'autorotate' },
                     { data: { id: 'cd', weight: 4, source: 'c', target: 'd'}, classes: 'autorotate' },
                     { data: { id: 'fe', weight: 6, source: 'f', target: 'e'}, classes: 'autorotate' },
                     { data: { id: 'ce', weight: 7, source: 'c', target: 'e'}, classes: 'autorotate' },
-                    { data: { id: 'de', weight: 8, source: 'd', target: 'e'}, classes: 'autorotate' }
+                    { data: { id: 'de', weight: 8, source: 'd', target: 'e'}, classes: 'autorotate' },
+                    { data: { id: 'bg', weight: 3, source: 'b', target: 'g'}, classes: 'autorotate' },
+                    { data: { id: 'ga', weight: 5, source: 'g', target: 'a'}, classes: 'autorotate' },
+                    { data: { id: 'fg', weight: 6, source: 'f', target: 'g'}, classes: 'autorotate' }
                 ]
             },
 

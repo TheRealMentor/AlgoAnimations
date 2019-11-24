@@ -18,13 +18,14 @@ How to use these animations? It is simple. Follow the steps below:
 
 ### Create new graphs
 
-* To create new graphs, you need to enter new edges in the textarea provided.
+* To create new graphs, you need to enter new edges in the textarea provided. (Use ***'Clear'*** button to clear the text in the field if it is present.)
 * Click on ***'Remove Graph'*** to delete the default graph.
 * After you have added the edges in the textarea. Click on ***'Create Graph'***. It will create the graph for you.
 
 ### Format for entering edges
 
 * Use the following format for entering edges in BFS or DFS.
+* Each edge is added in new line. You just need to enter the start vertex and end vertex in each line to determine the edge.
 
 ```javascript
 a b
@@ -33,9 +34,9 @@ c d
 d a
 ```
 
-* Each edge is added in new line. You just need to enter the start vertex and end vertex in each line to determine the edge.
 * This will create a new graph with following edges: ***ab, bc, cd*** and ***da***.
 * Use the following format for entering edges in MST.
+* Each edge is added in new line. You just need to enter the start vertex, end vertex and weight in each line to determine the edge.
 
 ```javascript
 a b 1
@@ -44,5 +45,4 @@ c d 2
 d a 4
 ```
 
-* Each edge is added in new line. You just need to enter the start vertex, end vertex and weights in each line to determine the edge.
 * This will create a new graph with following edges: ***ab, bc, cd, da*** with weights: ***1, 2, 3, 4*** respectively.
