@@ -25,14 +25,24 @@ How to use these animations? It is simple. Follow the steps below:
 ### Format for entering edges
 
 * Use the following format for entering edges in BFS or DFS. Example:
-<p>a b</p>
-<p>b c</p>
-<p>c d</p>
-<p>d a</p>
+
+```javascript
+a b
+b c
+c d
+d a
+```
+
+* Each edge is added in new line. You just need to enter the start vertex and end vertex in each line to determine the edge.
 * This will create a new graph with following edges: *ab, bc, cd* and *da*.
 * Use the following format for entering edges in MST. Example:
-<p>a b 1</p>
-<p>b c 2</p>
-<p>c d 3</p>
-<p>d a 4</p>
+
+```javascript
+a b 1
+b c 3
+c d 2
+d a 4
+```
+
+* Each edge is added in new line. You just need to enter the start vertex, end vertex and weights in each line to determine the edge.
 * This will create a new graph with following edges: *ab, bc, cd, da* with weights: *1, 2, 3, 4* respectively.
