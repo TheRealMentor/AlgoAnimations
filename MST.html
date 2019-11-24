@@ -5,35 +5,65 @@
     <meta charset=UTF-8 />
     <script src='node_modules/cytoscape/dist/cytoscape.min.js'></script>
     <style>
+        body {
+            background-color: #6fb7ff;
+        }
+        h1, #new-vertices, p {
+            text-align: center;
+        }
+        .btn {
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+        .btn-run { background-color: #27ae60; }
+        .btn-create { background-color: #8e44ad; }
+        .btn-remove { background-color: #c0392b; }
+        .btn-clear { background-color: #d35400; }
+
         #cy {
-            width: 99.8%;
+            width: 70%;
             height: 500px;
-            position: absolute;
-            top: 170px;
-            left: 0px;
             border: 0.1em black solid;
-            background-color: #f5f6fa;
+            background-color: #fff;
+            margin: 0 auto;
         }
         #DataForm label, button {
             display: inline-block;
             vertical-align: top;
         }
+
+        textarea {
+            height: 100px;
+            padding: 12px 10px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
     </style>    
 </head>
 
 <body>
+    <h1>Minimum Spanning Tree using Kruskal's Algorithm</h1>
+    <div id="cy"></div>
+    
     <div id='new-vertices'>
         <p id='DataForm'>
             <label>Enter the new edges: </label>
             <textarea id='addEdges'></textarea>
         </p>
-        <button type="button" id='btn-kruskal'>Run Kruskal</button>
-        <button type="button" id='addGraph'>Create Graph</button>
-        <button type="button" id='removeGraph'>Remove Graph</button>
-        <button type="button" id='clear'>Clear</button>
+        <button type="button" id='btn-kruskal' class='btn btn-run'>Run Kruskal</button>
+        <button type="button" id='addGraph' class='btn btn-create'>Create Graph</button>
+        <button type="button" id='removeGraph' class='btn btn-remove'>Remove Graph</button>
+        <button type="button" id='clear' class='btn btn-clear'>Clear</button>
     </div>
     <p><strong>Note:</strong> For more information, open README.md file or go to: <a href='https://github.com/TheRealMentor/AlgoAnimations' target="_blank">AlgoAnimations</a></p>
-    <div id="cy"></div>
 
     <script>
         var cy = cytoscape({
@@ -47,7 +77,8 @@
                     'color': 'white',
                     'width': 10,
                     'height': 10,
-                    'font-size': 7
+                    'font-size': 7,
+                    'background-color': '#2d3436'
                 })
                 .selector('edge')
                 .style({
@@ -55,7 +86,7 @@
                     'width': 1.5,
                     'line-color': '#ddd',
                     'label': 'data(weight)',
-                    'font-size': 5
+                    'font-size': 5,
                 })
                 .selector('.highlighted')
                 .style({

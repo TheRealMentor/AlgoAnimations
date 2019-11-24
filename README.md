@@ -10,7 +10,7 @@ How to use these animations? It is simple. Follow the steps below:
 
 * Enter the start vertex
 * Click ***'Run BFS'*** or ***'Run DFS'*** to see the animation for the algorithm on the default graph.
-* If you want to choose a different start vertex, click ***'Clear'***. It will reload the page.
+* If you want to choose a different start vertex or run another algorithm, click ***'Clear'***. It will reload the page.
 
 ### Use animation for Minimum Spanning Tree
 
