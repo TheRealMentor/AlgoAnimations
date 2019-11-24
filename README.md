@@ -25,14 +25,14 @@ How to use these animations? It is simple. Follow the steps below:
 ### Format for entering edges
 
 * Use the following format for entering edges in BFS or DFS.
-... Eg: a b
-...     b c
-...     c d
-...     d a
+...Eg: a b
+.......b c
+.......c d
+.......d a
 * This will create a new graph with following edges: *ab, bc, cd* and *da*.
 * Use the following format for entering edges in MST.
-... Eg: a b 1
-...     b c 2
-...     c d 3
-...     d a 4
+...Eg: a b 1
+.......b c 2
+.......c d 3
+.......d a 4
 * This will create a new graph with following edges: *ab, bc, cd, da* with weights: *1, 2, 3, 4* respectively.
