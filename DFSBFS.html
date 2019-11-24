@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animated DFS and BFS</title>
+    <meta charset=UTF-8 />
+    <script src='node_modules/cytoscape/dist/cytoscape.min.js'></script>
+    <style>
+        #cy {
+            width: 99.8%;
+            height: 500px;
+            position: absolute;
+            top: 200px;
+            left: 0px;
+            border: 0.1em black solid;
+            background-color: #f5f6fa;
+        }
+        #DataForm label, button {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+    </style>    
+</head>
+
+<body>
+    <div id="source">
+        Enter your start vertex: <input type="text" name="start" id="start"> &nbsp; <button type="button" id='btn-dfs'>Run DFS</button> &nbsp; <button type="button" id='btn-bfs'>Run BFS</button> &nbsp; <button type="button" id='clear'>Clear</button>
+    </div>
+    <div id='new-vertices'>
+        <p id='DataForm'>
+            <label>Enter the new edges: </label>
+            <textarea id='addEdges'></textarea>
+        </p>
+        <button type="button" id='addGraph'>Create Graph</button>
+        <button type="button" id='removeGraph'>Remove Graph</button>
+    </div>
+    <div id="cy"></div>
+
+    <script>
+        var cy = cytoscape({
+            container: document.getElementById('cy'),
+
+            boxSelectionEnabled: false,
+            autounselectify: true,
+
+            style: cytoscape.stylesheet()
+                .selector('node')
+                .style({
+                    'content': 'data(id)',
+                    'text-valign': 'center',
+                    'color': 'white',
+                    'width': 10,
+                    'height': 10,
+                    'font-size': 7
+                })
+                .selector('edge')
+                .style({
+                    'curve-style': 'bezier',
+                    'target-arrow-shape': 'triangle-backcurve',
+                    'arrow-scale': 0.5,
+                    'width': 1,
+                    'line-color': '#ddd',
+                    'target-arrow-color': '#ddd'
+                })
+                .selector('.highlighted')
+                .style({
+                    'background-color': '#44bd32',
+                    'line-color': '#61bffc',
+                    'target-arrow-color': '#61bffc',
+                    'transition-property': 'background-color, line-color, target-arrow-color',
+                    'transition-duration': '0.5s'
+                }),
+
+            elements: {
+                nodes: [
+                    { data: { id: 'a' } },
+                    { data: { id: 'b' } },
+                    { data: { id: 'c' } },
+                    { data: { id: 'd' } },
+                    { data: { id: 'e' } },
+                    { data: { id: 'f' } },
+                    { data: { id: 'g' } },
+                    { data: { id: 'h' } },
+                    { data: { id: 'i' } },
+                    { data: { id: 'j' } },
+                    { data: { id: 'k' } }
+                ],
+
+                edges: [
+                    { data: { id: 'ab', source: 'a', target: 'b' } },
+                    { data: { id: 'af', source: 'a', target: 'f' } },
+                    { data: { id: 'be', source: 'b', target: 'e' } },
+                    { data: { id: 'bc', source: 'b', target: 'c' } },
+                    { data: { id: 'cd', source: 'c', target: 'd' } },
+                    { data: { id: 'ef', source: 'e', target: 'f' } },
+                    { data: { id: 'ce', source: 'c', target: 'e' } },
+                    { data: { id: 'de', source: 'd', target: 'e' } },
+                    { data: { id: 'gh', source: 'g', target: 'h' } },
+                    { data: { id: 'hj', source: 'h', target: 'j' } },
+                    { data: { id: 'ki', source: 'k', target: 'i' } },
+                    { data: { id: 'jk', source: 'j', target: 'k' } },
+                    { data: { id: 'ag', source: 'a', target: 'g' } },
+                    { data: { id: 'fg', source: 'f', target: 'g' } },
+                    { data: { id: 'kb', source: 'k', target: 'b' } }
+                ]
+                },
+
+            layout: {
+                name: 'cose',
+                directed: true
+            }
+            });
+
+            let btnDFS = document.getElementById('btn-dfs');
+            let btnBFS = document.getElementById('btn-bfs');
+            let btnClear = document.getElementById('clear');
+
+            // Depth First Search
+            btnDFS.addEventListener('click', function(event){
+                let source = document.getElementById('start').value;
+                var startNode = '#' + source;
+                var dfs = cy.elements().dfs(startNode, function(){}, true);
+
+                var i = 0;
+                var highlightNextEle = function(){
+                if( i < dfs.path.length ){
+                    dfs.path[i].addClass('highlighted');
+
+                    i++;
+                    setTimeout(highlightNextEle, 250);
+                }
+                };
+
+                // kick off first highlight
+                highlightNextEle();
+            });
+            
+            // Breadth First Search
+            btnBFS.addEventListener('click', function(event){
+                let source = document.getElementById('start').value;
+                var startNode = '#' + source;
+                var bfs = cy.elements().bfs(startNode, function(){}, true);
+
+                var i = 0;
+                var highlightNextEle = function(){
+                if( i < bfs.path.length ){
+                    bfs.path[i].addClass('highlighted');
+
+                    i++;
+                    setTimeout(highlightNextEle, 250);
+                }
+                };
+
+                // kick off first highlight
+                highlightNextEle();
+            });
+
+            // Clear
+            btnClear.addEventListener('click', function(event){
+                document.getElementById('start').value = '';
+                document.getElementById('addEdges').value = '';
+                window.location.reload();
+
+            });
+
+            // UI part
+            function addEdges(){
+                let edgeText = document.getElementById('addEdges').value;
+                var edges = edgeText.split('\n');
+                var edgesArr = [];
+                for(var i=0; i<edges.length; i++){
+                    var str = edges[i].split(' ')
+                    edgesArr.push(str);
+                }
+                return edgesArr;
+            }
+
+            function createGraph(edgesArr){
+                for(var i=0; i<edgesArr.length; i++){
+                    cy.add([
+                        { group: 'nodes', data: { id: edgesArr[i][0] } },
+                        { group: 'nodes', data: { id: edgesArr[i][1] } },
+                        { group: 'edges', data: { id: edgesArr[i][0]+edgesArr[i][1], source: edgesArr[i][0], target: edgesArr[i][1] } }
+                    ]);
+                }
+                var layout = cy.layout({
+                    name: 'cose',
+                    directed: true
+                });
+                layout.run();
+            }
+
+            function removeGraph(){
+                var nodes = cy.nodes();
+                cy.remove(nodes);
+            }
+
+            let btnRemove = document.getElementById('removeGraph');
+            let btnCreate = document.getElementById('addGraph');
+
+            btnRemove.addEventListener('click', removeGraph);
+            btnCreate.addEventListener('click', function(){
+                arr = addEdges();
+                createGraph(arr);
+            });
+
+    </script>
+</body>
+
+</html>

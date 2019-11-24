@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animated Minimum Spanning Tree</title>
+    <meta charset=UTF-8 />
+    <script src='node_modules/cytoscape/dist/cytoscape.min.js'></script>
+    <style>
+        #cy {
+            width: 99.8%;
+            height: 500px;
+            position: absolute;
+            top: 150px;
+            left: 0px;
+            border: 0.1em black solid;
+            background-color: #f5f6fa;
+        }
+        #DataForm label, button {
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>    
+</head>
+
+<body>
+    <div id='new-vertices'>
+        <p id='DataForm'>
+            <label>Enter the new edges: </label>
+            <textarea id='addEdges'></textarea>
+        </p>
+        <button type="button" id='btn-kruskal'>Run Kruskal</button>
+        <button type="button" id='addGraph'>Create Graph</button>
+        <button type="button" id='removeGraph'>Remove Graph</button>
+        <button type="button" id='clear'>Clear</button>
+    </div>
+    <div id="cy"></div>
+
+    <script>
+        var cy = cytoscape({
+            container: document.getElementById('cy'),
+
+            style: cytoscape.stylesheet()
+                .selector('node')
+                .style({
+                    'content': 'data(id)',
+                    'text-valign': 'center',
+                    'color': 'white',
+                    'width': 10,
+                    'height': 10,
+                    'font-size': 7
+                })
+                .selector('edge')
+                .style({
+                    'curve-style': 'bezier',
+                    'width': 1.5,
+                    'line-color': '#ddd',
+                    'label': 'data(weight)',
+                    'font-size': 5
+                })
+                .selector('.highlighted')
+                .style({
+                    'background-color': '#44bd32',
+                    'line-color': '#61bffc',
+                    'transition-property': 'background-color, line-color',
+                    'transition-duration': '0.5s'
+                }),
+
+            elements: {
+                nodes: [
+                    { data: { id: 'a' } },
+                    { data: { id: 'b' } },
+                    { data: { id: 'c' } },
+                    { data: { id: 'd' } },
+                    { data: { id: 'e' } },
+                    { data: { id: 'f' } }
+                ],
+
+            edges: [
+                    { data: { id: 'ab', weight: 14, source: 'a', target: 'b'}, classes: 'autorotate' },
+                    { data: { id: 'af', weight: 7, source: 'a', target: 'f'}, classes: 'autorotate' },
+                    { data: { id: 'be', weight: 6, source: 'b', target: 'e'}, classes: 'autorotate' },
+                    { data: { id: 'bc', weight: 5, source: 'b', target: 'c'}, classes: 'autorotate' },
+                    { data: { id: 'cd', weight: 4, source: 'c', target: 'd'}, classes: 'autorotate' },
+                    { data: { id: 'fe', weight: 6, source: 'f', target: 'e'}, classes: 'autorotate' },
+                    { data: { id: 'ce', weight: 7, source: 'c', target: 'e'}, classes: 'autorotate' },
+                    { data: { id: 'de', weight: 8, source: 'd', target: 'e'}, classes: 'autorotate' }
+                ]
+            },
+
+            layout: {
+                name: 'cose',
+                directed: false
+            }
+                
+        });
+
+        let btnClear = document.getElementById('clear');
+        let btnKruskal = document.getElementById('btn-kruskal');
+
+        btnKruskal.addEventListener('click', function(){
+            var p = cy.elements().kruskal(function(edge){
+                var minEdge = edge.data('weight');
+                return minEdge;
+            });
+            
+            var i = 0;
+            var highlightNextEle = function(){
+                if( i < p.length ){
+                    p[i].addClass('highlighted');            
+                    i++;
+                    setTimeout(highlightNextEle, 250);
+                }
+            };
+
+            highlightNextEle();
+        });
+
+        // Clear
+        btnClear.addEventListener('click', function(event){
+            document.getElementById('addEdges').value = '';
+            window.location.reload();
+
+        });
+
+        // UI part
+        function addEdges(){
+            let edgeText = document.getElementById('addEdges').value;
+            var edges = edgeText.split('\n');
+            var edgesArr = [];
+            for(var i=0; i<edges.length; i++){
+                var str = edges[i].split(' ')
+                edgesArr.push(str);
+            }
+            return edgesArr;
+        }
+
+        function createGraph(edgesArr){
+            for(var i=0; i<edgesArr.length; i++){
+                cy.add([
+                    { group: 'nodes', data: { id: edgesArr[i][0] } },
+                    { group: 'nodes', data: { id: edgesArr[i][1] } },
+                    { group: 'edges', data: { id: edgesArr[i][0]+edgesArr[i][1], source: edgesArr[i][0], target: edgesArr[i][1], weight: parseInt(edgesArr[i][2]) } }
+                ]);
+            }
+            var layout = cy.layout({
+                name: 'cose',
+                directed: true
+            });
+            layout.run();
+        }
+
+        function removeGraph(){
+            var nodes = cy.nodes();
+            cy.remove(nodes);
+        }
+
+        let btnRemove = document.getElementById('removeGraph');
+        let btnCreate = document.getElementById('addGraph');
+
+        btnRemove.addEventListener('click', removeGraph);
+        btnCreate.addEventListener('click', function(){
+            arr = addEdges();
+            createGraph(arr);
+        });
+
+    </script>
+</body>
+
+</html>
