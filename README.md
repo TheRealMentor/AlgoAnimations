@@ -8,12 +8,14 @@ How to use these animations? It is simple. Follow the steps below:
 
 ### Use animation for BFS and DFS
 
+* Open ***DFSBFS.html*** file.
 * Enter the start vertex
 * Click ***'Run BFS'*** or ***'Run DFS'*** to see the animation for the algorithm on the default graph.
 * If you want to choose a different start vertex or run another algorithm, click ***'Clear'***. It will reload the page.
 
 ### Use animation for Minimum Spanning Tree
 
+* Open ***'MST.html'*** file.
 * Just click on ***'Run Kruskal'***. It will show animation for minimum spanning tree using Kruskal's algorithm.
 
 ### Create new graphs
@@ -46,3 +48,7 @@ d a 4
 ```
 
 * This will create a new graph with following edges: ***ab, bc, cd, da*** with weights: ***1, 2, 3, 4*** respectively.
+
+### File is not working properly
+
+In that case, make sure that you have downloaded the file properly. Main file that is used in the algorithms is *'cytoscape.min.js'* which is available in *'node_modules -> cytoscape -> dist -> cytoscape.min.js'*.

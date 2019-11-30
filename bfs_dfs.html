@@ -4,13 +4,31 @@
     <title>Animated DFS and BFS</title>
     <meta charset=UTF-8 />
     <script src='node_modules/cytoscape/dist/cytoscape.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #6fb7ff;
+            background-color: #fff;
+            font-family: 'Lato', sans-serif;
         }
-        h1, #new-vertices, p, #source {
+        
+        #content {
+            width: 43%;
+            margin: 0 auto;
+        }
+
+        #new-vertices, p, #source {
+            text-align: left;
+        }
+
+        #note {
             text-align: center;
         }
+
+        h1 {
+            font-family: 900;
+            text-align: center;
+        }
+
         .btn {
             border: none;
             border-radius: 5px;
@@ -21,36 +39,55 @@
             display: inline-block;
             font-size: 16px;
         }
-        .btn-run { background-color: #27ae60; }
-        .btn-create { background-color: #8e44ad; }
-        .btn-remove { background-color: #c0392b; }
-        .btn-clear { background-color: #d35400; }
+
+        .btn:hover{
+            cursor: pointer;
+        }
+
+        .btn-run { background-color: #1b7943; }
+        .btn-create { background-color: #3f51b5; }
+        .btn-remove { background-color: #aa2e25; }
+        .btn-clear { background-color: #fb8c00; }
 
         #cy {
             width: 70%;
-            height: 500px;
-            border: 0.1em black solid;
+            height: 420px;
             background-color: #fff;
             margin: 0 auto;
         }
+
         #DataForm label, button {
             display: inline-block;
             vertical-align: top;
         }
 
         input[type=text], select {
+            -webkit-transition: all 0.30s ease-in-out;
+            -moz-transition: all 0.30s ease-in-out;
+            -ms-transition: all 0.30s ease-in-out;
+            -o-transition: all 0.30s ease-in-out;
             padding: 10px 10px;
             display: inline-block;
-            border: 1px solid #ccc;
+            border: 1px solid rgb(185, 185, 185);
             border-radius: 5px;
             box-sizing: border-box;
         }
 
+        input[type=text]:focus, textarea:focus {
+            box-shadow: 0 0 5px rgb(65, 197, 87);
+            border: 1px solid rgb(65, 197, 87);
+        }
+
         textarea {
-            height: 100px;
+            -webkit-transition: all 0.30s ease-in-out;
+            -moz-transition: all 0.30s ease-in-out;
+            -ms-transition: all 0.30s ease-in-out;
+            -o-transition: all 0.30s ease-in-out;
+            height: 70px;
+            width: 175px;
             padding: 12px 10px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: 1px solid rgb(185, 185, 185);
             border-radius: 4px;
         }
 
@@ -58,22 +95,27 @@
 </head>
 
 <body>
-    <h1>Breadth First Search and Depth First Search Algorithm</h1>
+    <div id="header">
+        <h1>AlgoAnimations &mdash; BFS and DFS</h1>
+    </div>
     
     <div id="cy"></div>
     <br/>
-    <div id="source">
-        Enter your start vertex: <input type="text" name="start" id="start"> &nbsp; <button type="button" id='btn-dfs' class='btn btn-run'>Run DFS</button> &nbsp; <button type="button" id='btn-bfs' class='btn btn-run'>Run BFS</button> &nbsp; <button type="button" id='clear' class='btn btn-clear'>Clear</button>
+    <div id="content">
+        <div id="source">
+            Enter your start vertex: &nbsp;<input type="text" name="start" id="start"> &nbsp; <button type="button" id='btn-dfs' class='btn btn-run'>Run DFS</button> &nbsp; <button type="button" id='btn-bfs' class='btn btn-run'>Run BFS</button> &nbsp; <button type="button" id='clear' class='btn btn-clear'>Clear</button>
+        </div>
+        <div id='new-vertices'>
+            <p id='DataForm'>
+                <label>Enter the new edges: &nbsp;</label>
+                <textarea id='addEdges'></textarea> &nbsp;
+                <button type="button" id='addGraph' class='btn btn-create'>Create Graph</button> &nbsp;
+                <button type="button" id='removeGraph' class='btn btn-remove'>Remove Graph</button> 
+            </p>
+        </div>
+        <br/>
+        <p id='note'><strong>Note:</strong> For more information, open README.md file or go to: <a href='https://github.com/TheRealMentor/AlgoAnimations' target="_blank">AlgoAnimations</a></p>
     </div>
-    <div id='new-vertices'>
-        <p id='DataForm'>
-            <label>Enter the new edges: </label>
-            <textarea id='addEdges'></textarea>
-        </p>
-        <button type="button" id='addGraph' class='btn btn-create'>Create Graph</button>
-        <button type="button" id='removeGraph' class='btn btn-remove'>Remove Graph</button>
-    </div>
-    <p><strong>Note:</strong> For more information, open README.md file or go to: <a href='https://github.com/TheRealMentor/AlgoAnimations' target="_blank">AlgoAnimations</a></p>
 
     <script>
         var cy = cytoscape({
@@ -88,25 +130,25 @@
                     'content': 'data(id)',
                     'text-valign': 'center',
                     'color': 'white',
-                    'width': 10,
-                    'height': 10,
-                    'font-size': 7,
+                    'width': 15,
+                    'height': 15,
+                    'font-size': 10,
                     'background-color': '#2d3436'
                 })
                 .selector('edge')
                 .style({
                     'curve-style': 'bezier',
                     'target-arrow-shape': 'triangle-backcurve',
-                    'arrow-scale': 0.5,
-                    'width': 1.25,
+                    'arrow-scale': 0.75,
+                    'width': 1.75,
                     'line-color': '#ddd',
                     'target-arrow-color': '#ddd'
                 })
                 .selector('.highlighted')
                 .style({
-                    'background-color': '#44bd32',
-                    'line-color': '#61bffc',
-                    'target-arrow-color': '#61bffc',
+                    'background-color': '#c0392b',
+                    'line-color': '#4caf50',
+                    'target-arrow-color': '#4caf50',
                     'transition-property': 'background-color, line-color, target-arrow-color',
                     'transition-duration': '0.5s'
                 }),
@@ -158,41 +200,47 @@
             // Depth First Search
             btnDFS.addEventListener('click', function(event){
                 let source = document.getElementById('start').value;
-                var startNode = '#' + source;
+                if (source == "") {
+                    alert("Enter a start vertex!!");
+                } else {
+                    var startNode = '#' + source;
                 var dfs = cy.elements().dfs(startNode, function(){}, true);
 
                 var i = 0;
                 var highlightNextEle = function(){
                 if( i < dfs.path.length ){
-                    dfs.path[i].addClass('highlighted');
+                        dfs.path[i].addClass('highlighted');
 
-                    i++;
-                    setTimeout(highlightNextEle, 250);
-                }
+                        i++;
+                        setTimeout(highlightNextEle, 250);
+                    }
                 };
-
-                // kick off first highlight
                 highlightNextEle();
+                }
             });
             
             // Breadth First Search
             btnBFS.addEventListener('click', function(event){
                 let source = document.getElementById('start').value;
-                var startNode = '#' + source;
-                var bfs = cy.elements().bfs(startNode, function(){}, true);
 
-                var i = 0;
-                var highlightNextEle = function(){
-                if( i < bfs.path.length ){
-                    bfs.path[i].addClass('highlighted');
+                if (source == "") {
+                    alert("Enter a start vertex!!");
+                } else {
+                    var startNode = '#' + source;
+                    var bfs = cy.elements().bfs(startNode, function(){}, true);
 
-                    i++;
-                    setTimeout(highlightNextEle, 250);
+                    var i = 0;
+                    var highlightNextEle = function(){
+                    if( i < bfs.path.length ){
+                            bfs.path[i].addClass('highlighted');
+
+                            i++;
+                            setTimeout(highlightNextEle, 250);
+                        }
+                    };
+
+                    highlightNextEle();
                 }
-                };
-
-                // kick off first highlight
-                highlightNextEle();
             });
 
             // Clear

@@ -4,13 +4,26 @@
     <title>Animated Minimum Spanning Tree</title>
     <meta charset=UTF-8 />
     <script src='node_modules/cytoscape/dist/cytoscape.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #6fb7ff;
+            background-color: #fff;
+            font-family: 'Lato', sans-serif;
         }
-        h1, #new-vertices, p {
+
+        #new-vertices, p, #source {
             text-align: center;
         }
+
+        #note {
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 900;
+            text-align: center;
+        }
+
         .btn {
             border: none;
             border-radius: 5px;
@@ -21,28 +34,43 @@
             display: inline-block;
             font-size: 16px;
         }
-        .btn-run { background-color: #27ae60; }
-        .btn-create { background-color: #8e44ad; }
-        .btn-remove { background-color: #c0392b; }
-        .btn-clear { background-color: #d35400; }
+
+        .btn:hover{
+            cursor: pointer;
+        }
+
+        .btn-run { background-color: #1b7943; }
+        .btn-create { background-color: #3f51b5; }
+        .btn-remove { background-color: #aa2e25; }
+        .btn-clear { background-color: #fb8c00; }
 
         #cy {
             width: 70%;
-            height: 500px;
-            border: 0.1em black solid;
+            height: 420px;
             background-color: #fff;
             margin: 0 auto;
         }
+
         #DataForm label, button {
             display: inline-block;
             vertical-align: top;
         }
 
+        textarea:focus {
+            box-shadow: 0 0 5px rgb(65, 197, 87);
+            border: 1px solid rgb(65, 197, 87);
+        }
+
         textarea {
-            height: 100px;
+            -webkit-transition: all 0.30s ease-in-out;
+            -moz-transition: all 0.30s ease-in-out;
+            -ms-transition: all 0.30s ease-in-out;
+            -o-transition: all 0.30s ease-in-out;
+            height: 70px;
+            width: 175px;
             padding: 12px 10px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: 1px solid rgb(185, 185, 185);
             border-radius: 4px;
         }
 
@@ -50,7 +78,7 @@
 </head>
 
 <body>
-    <h1>Minimum Spanning Tree using Kruskal's Algorithm</h1>
+    <h1>AlgoAnimations &mdash; MST</h1>
     <div id="cy"></div>
     
     <div id='new-vertices'>
@@ -58,12 +86,13 @@
             <label>Enter the new edges: </label>
             <textarea id='addEdges'></textarea>
         </p>
-        <button type="button" id='btn-kruskal' class='btn btn-run'>Run Kruskal</button>
-        <button type="button" id='addGraph' class='btn btn-create'>Create Graph</button>
-        <button type="button" id='removeGraph' class='btn btn-remove'>Remove Graph</button>
+        <button type="button" id='btn-kruskal' class='btn btn-run'>Run Kruskal</button> &nbsp;
+        <button type="button" id='addGraph' class='btn btn-create'>Create Graph</button> &nbsp;
+        <button type="button" id='removeGraph' class='btn btn-remove'>Remove Graph</button> &nbsp;
         <button type="button" id='clear' class='btn btn-clear'>Clear</button>
     </div>
-    <p><strong>Note:</strong> For more information, open README.md file or go to: <a href='https://github.com/TheRealMentor/AlgoAnimations' target="_blank">AlgoAnimations</a></p>
+    <p id='note'><strong>Note:</strong> For more information, open README.md file or go to: <a href='https://github.com/TheRealMentor/AlgoAnimations' target="_blank">AlgoAnimations</a></p>
+ 
 
     <script>
         var cy = cytoscape({
@@ -138,16 +167,28 @@
                 return minEdge;
             });
             
+            // Making the path blink
             var i = 0;
             var highlightNextEle = function(){
-                if( i < p.length ){
-                    p[i].addClass('highlighted');            
+                if( i < 2 ){
+                    p.flashClass('highlighted', 800);           
                     i++;
-                    setTimeout(highlightNextEle, 250);
+                    setTimeout(highlightNextEle, 800);
                 }
             };
-
             highlightNextEle();
+
+            // Highlighting the path at the end
+            var j = 0;
+            var highlightAll = function(){
+            if( j < p.length ){
+                    p.addClass('highlighted');
+                    j++;
+                    setTimeout(highlightAll, 800);
+                }
+            };
+            highlightAll();
+
         });
 
         // Clear
