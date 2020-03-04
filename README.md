@@ -52,3 +52,7 @@ d a 4
 ### File is not working properly
 
 In that case, make sure that you have downloaded the file properly. Main file that is used in the algorithms is *'cytoscape.min.js'* which is available in *'node_modules -> cytoscape -> dist -> cytoscape.min.js'*.
+
+Icon available on my portfolio!
+
+Icons made by <a href="https://www.flaticon.com/authors/becris" title="Becris">Becris</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
